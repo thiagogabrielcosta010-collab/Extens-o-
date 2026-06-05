@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campanha Educativa — Amara NZero</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:      #0a0f0d;
+  --forest:   #0e2218;
+  --moss:     #1a3d2b;
+  --fern:     #2a6048;
+  --sage:     #4a8c6a;
+  --lime:     #8fd4a0;
+  --paper:    #f0ede6;
+  --parchment:#e8e3d8;
+  --cream:    #faf8f3;
+  --rust:     #c4622d;
+  --amber:    #d4a043;
+  --charcoal: #2c2c2c;
+  --ash:      #6b6b6b;
+}
+
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; font-size:16px; }
+
+body {
+  font-family: 'Cormorant Garamond', serif;
+  background: var(--cream);
+  color: var(--ink);
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* ── PROGRESS ── */
+#bar {
+  position:fixed; top:0; left:0; height:2px; z-index:100;
+  background: var(--fern); width:0; transition: width .2s;
+}
+
+/* ── NAV ── */
+#nav {
+  position:fixed; top:0; left:0; right:0; z-index:99;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:20px 48px;
+  mix-blend-mode: multiply;
+}
+.nav-logo {
+  font-family:'Space Mono', monospace;
+  font-size:11px; letter-spacing:.15em;
+  color: var(--fern); text-transform:uppercase;
+}
+.nav-links {
+  display:flex; gap:32px; list-style:none;
+}
+.nav-links a {
+  font-family:'Space Mono', monospace;
+  font-size:10px; letter-spacing:.12em;
+  text-transform:uppercase; color: var(--ash);
+  text-decoration:none; transition: color .2s;
+}
+.nav-links a:hover { color: var(--fern); }
+
+/* ── SECTIONS ── */
+section {
+  min-height:100vh; width:100%;
+  position:relative; overflow:hidden;
+}
+
+/* ── REVEAL ── */
+[data-reveal] {
+  opacity:0; transform:translateY(32px);
+  transition: opacity .9s cubic-bezier(.16,1,.3,1), transform .9s cubic-bezier(.16,1,.3,1);
+}
+[data-reveal].on { opacity:1; transform:none; }
+[data-reveal][data-d="1"] { transition-delay:.1s; }
+[data-reveal][data-d="2"] { transition-delay:.2s; }
+[data-reveal][data-d="3"] { transition-delay:.3s; }
+[data-reveal][data-d="4"] { transition-delay:.4s; }
+[data-reveal][data-d="5"] { transition-delay:.55s; }
+
+/* ══════════════════
+   § 1 CAPA
+══════════════════ */
+#capa {
+  background: var(--forest);
+  display:grid; grid-template-columns: 1fr 1fr;
+}
+
+.capa-text {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:120px 64px 80px;
+  border-right:1px solid rgba(138,200,160,.12);
+  position:relative; z-index:1;
+}
+
+.capa-eyebrow {
+  font-family:'Space Mono', monospace;
+  font-size:10px; letter-spacing:.2em;
+  text-transform:uppercase; color:var(--lime);
+  margin-bottom:28px;
+  display:flex; align-items:center; gap:16px;
+}
+.capa-eyebrow::after {
+  content:''; flex:1; height:1px; background:rgba(143,212,160,.25);
+}
+
+.capa-h1 {
+  font-size: clamp(44px,5.5vw,76px);
+  font-weight:300; line-height:1.0;
+  color: var(--paper);
+  margin-bottom:32px;
+}
+.capa-h1 em {
+  font-style:italic; color:var(--lime);
+}
+
+.capa-lead {
+  font-size:18px; font-weight:300; line-height:1.75;
+  color:rgba(240,237,230,.6);
+  max-width:380px; margin-bottom:56px;
+  border-left:2px solid var(--fern);
+  padding-left:20px;
+}
+
+.author-block {
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(143,212,160,.15);
+  border-radius:4px; padding:20px 24px;
+  margin-bottom:40px;
+}
+.author-name {
+  font-size:17px; font-weight:400; color:var(--paper);
+  margin-bottom:8px;
+}
+.author-meta {
+  font-family:'Space Mono', monospace;
+  font-size:10px; letter-spacing:.08em;
+  color:var(--lime); opacity:.7;
+  display:flex; flex-wrap:wrap; gap:12px;
+}
+.author-meta span::before { content:'→ '; }
+
+.tag-row { display:flex; flex-wrap:wrap; gap:8px; }
+.tag {
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.12em;
+  text-transform:uppercase; padding:5px 14px;
+  border:1px solid; border-radius:2px;
+}
+.tag-7  { color:var(--amber); border-color:var(--amber); background:rgba(212,160,67,.08); }
+.tag-12 { color:var(--lime);  border-color:var(--lime);  background:rgba(143,212,160,.08); }
+.tag-13 { color:#7ec8e3;       border-color:#7ec8e3;       background:rgba(126,200,227,.08); }
+
+/* capa right — editorial grid */
+.capa-right {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:120px 56px 80px;
+  position:relative;
+}
+
+.capa-right-label {
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(143,212,160,.4); margin-bottom:48px;
+}
+
+.manifesto {
+  display:flex; flex-direction:column; gap:0;
+}
+.manifesto-line {
+  font-size:clamp(13px,1.4vw,17px); font-weight:300;
+  color:rgba(240,237,230,.5); line-height:1.8;
+  padding:18px 0; border-bottom:1px solid rgba(143,212,160,.08);
+  position:relative; transition: color .3s, padding-left .3s;
+  cursor:default;
+}
+.manifesto-line:hover {
+  color:var(--lime); padding-left:12px;
+}
+.manifesto-line strong {
+  color:var(--paper); font-weight:400;
+}
+.manifesto-counter {
+  font-family:'Space Mono', monospace;
+  font-size:9px; color:rgba(143,212,160,.3);
+  margin-right:16px;
+}
+
+.scroll-cue {
+  position:absolute; bottom:36px; left:50%;
+  transform:translateX(-50%);
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(143,212,160,.35);
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  cursor:pointer; animation: drip 2.5s ease-in-out infinite;
+}
+@keyframes drip {
+  0%,100% { transform:translateX(-50%) translateY(0); }
+  50% { transform:translateX(-50%) translateY(8px); }
+}
+.scroll-cue svg { opacity:.4; }
+
+/* ══════════════════
+   § 2 DIAGNÓSTICO
+══════════════════ */
+#diagnostico {
+  background:var(--paper);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:100px 64px;
+}
+
+.diag-top {
+  display:grid; grid-template-columns:1fr 2fr;
+  gap:64px; align-items:start;
+  margin-bottom:72px;
+}
+
+.diag-label {
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--fern); margin-bottom:16px;
+}
+
+.diag-h2 {
+  font-size:clamp(38px,5vw,66px);
+  font-weight:300; line-height:1.0;
+  color:var(--ink);
+}
+.diag-h2 em { color:var(--fern); font-style:italic; }
+
+.diag-intro {
+  font-size:18px; font-weight:300; line-height:1.8;
+  color:var(--ash);
+  padding-top:8px;
+  border-top:1px solid rgba(42,96,72,.2);
+}
+.diag-intro strong { color:var(--fern); font-weight:400; }
+
+.diag-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:rgba(42,96,72,.15); }
+
+.diag-cell {
+  background:var(--cream); padding:40px 36px;
+  position:relative; overflow:hidden;
+  transition: background .3s;
+}
+.diag-cell:hover { background:var(--parchment); }
+
+.cell-num {
+  font-family:'Space Mono', monospace;
+  font-size:11px; letter-spacing:.12em;
+  color:var(--sage); margin-bottom:24px;
+}
+.cell-type {
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  margin-bottom:16px; padding:4px 10px; display:inline-block;
+  border-radius:2px;
+}
+.type-obs  { background:rgba(74,140,106,.1); color:var(--fern); }
+.type-opp  { background:rgba(212,160,67,.12); color:#8a6420; }
+.type-prob { background:rgba(196,98,45,.1); color:var(--rust); }
+
+.cell-title {
+  font-size:24px; font-weight:400; line-height:1.2;
+  color:var(--ink); margin-bottom:16px;
+}
+.cell-body {
+  font-size:15px; font-weight:300; line-height:1.75;
+  color:var(--ash);
+}
+.cell-body strong { color:var(--charcoal); font-weight:400; }
+
+/* ══════════════════
+   § 3 PROPOSTA
+══════════════════ */
+#proposta {
+  background:var(--ink);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:100px 64px;
+}
+
+.prop-top {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:64px; margin-bottom:72px; align-items:end;
+}
+
+.prop-h2 {
+  font-size:clamp(40px,5vw,68px);
+  font-weight:300; line-height:1.0; color:var(--paper);
+}
+.prop-h2 em { color:var(--lime); font-style:italic; }
+
+.prop-description {
+  font-size:17px; font-weight:300; line-height:1.8;
+  color:rgba(240,237,230,.55);
+}
+.prop-description strong { color:var(--lime); font-weight:400; }
+
+.prop-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:rgba(255,255,255,.06); }
+
+.prop-cell {
+  background:var(--charcoal); padding:44px 40px;
+  position:relative; overflow:hidden;
+  transition: background .3s;
+}
+.prop-cell:hover { background:#333; }
+
+.prop-cell::after {
+  content:''; position:absolute; bottom:0; left:0; right:0;
+  height:2px;
+}
+.pc1::after { background:var(--lime); }
+.pc2::after { background:var(--amber); }
+.pc3::after { background:#7ec8e3; }
+.pc4::after { background:var(--sage); }
+
+.prop-n {
+  font-family:'Space Mono', monospace;
+  font-size:10px; letter-spacing:.15em; color:var(--ash);
+  margin-bottom:20px;
+}
+.prop-title {
+  font-size:26px; font-weight:400; color:var(--paper);
+  margin-bottom:14px; line-height:1.2;
+}
+.prop-body {
+  font-size:15px; font-weight:300; line-height:1.75;
+  color:rgba(240,237,230,.5);
+}
+.prop-body strong { color:rgba(240,237,230,.8); font-weight:400; }
+
+.prop-note {
+  margin-top:16px; padding:12px 16px;
+  background:rgba(255,255,255,.04);
+  border-left:2px solid;
+  font-size:13px; font-weight:300; line-height:1.6;
+  color:rgba(240,237,230,.4); font-style:italic;
+}
+.pc1 .prop-note { border-color:var(--lime); }
+.pc2 .prop-note { border-color:var(--amber); }
+.pc3 .prop-note { border-color:#7ec8e3; }
+.pc4 .prop-note { border-color:var(--sage); }
+
+/* ══════════════════
+   § 4 ODS
+══════════════════ */
+#ods {
+  background:var(--moss);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:100px 64px;
+}
+
+.ods-top { margin-bottom:64px; }
+.ods-h2 {
+  font-size:clamp(38px,5vw,62px);
+  font-weight:300; line-height:1.05; color:var(--paper);
+  margin-bottom:20px;
+}
+.ods-h2 em { color:var(--lime); font-style:italic; }
+.ods-sub {
+  font-size:17px; font-weight:300; line-height:1.75;
+  color:rgba(240,237,230,.55); max-width:520px;
+}
+
+.ods-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; }
+
+.ods-card {
+  border-radius:2px; overflow:hidden;
+  border:1px solid rgba(255,255,255,.08);
+  transition: transform .3s, border-color .3s;
+}
+.ods-card:hover { transform:translateY(-6px); border-color:rgba(255,255,255,.2); }
+
+.ods-header {
+  padding:36px 32px;
+  display:flex; flex-direction:column; gap:8px;
+}
+.ods7h  { background:var(--amber); }
+.ods12h { background:var(--fern); }
+.ods13h { background:#1a6080; }
+
+.ods-n {
+  font-family:'Space Mono', monospace;
+  font-size:52px; font-weight:700; line-height:1;
+  color:rgba(255,255,255,.2); align-self:flex-end;
+}
+.ods-name {
+  font-size:20px; font-weight:400; color:#fff; line-height:1.2;
+}
+.ods-label {
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+  color:rgba(255,255,255,.6);
+}
+
+.ods-body {
+  background:rgba(10,15,13,.55); backdrop-filter:blur(6px);
+  padding:28px 32px;
+}
+.ods-body p {
+  font-size:14px; font-weight:300; line-height:1.8;
+  color:var(--lime); opacity:.85;
+}
+.ods-body p strong { color:var(--paper); font-weight:400; opacity:1; }
+
+.ods-link {
+  display:flex; align-items:center; gap:8px;
+  margin-top:16px;
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+  color:rgba(143,212,160,.5);
+}
+.ods-link::before, .ods-link::after {
+  content:''; flex:1; height:1px;
+  background:rgba(143,212,160,.2);
+}
+
+/* ══════════════════
+   § 5 RESULTADOS
+══════════════════ */
+#resultados {
+  background:var(--paper);
+  display:grid; grid-template-columns:1fr 1.2fr;
+  min-height:100vh;
+}
+
+.res-left-panel {
+  background:var(--fern);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:100px 64px;
+  position:relative; overflow:hidden;
+}
+.res-left-panel::before {
+  content:''; position:absolute; inset:0;
+  background: radial-gradient(ellipse 80% 60% at 0% 100%, rgba(0,0,0,.3) 0%, transparent 60%);
+}
+
+.res-bignum {
+  font-size:160px; font-weight:300; line-height:.9;
+  color:rgba(255,255,255,.07); position:absolute;
+  bottom:-20px; left:40px;
+  font-style:italic; pointer-events:none;
+}
+
+.res-h2 {
+  font-size:clamp(36px,4vw,58px);
+  font-weight:300; line-height:1.05;
+  color:var(--paper); position:relative; z-index:1;
+  margin-bottom:24px;
+}
+.res-h2 em { color:var(--lime); font-style:italic; }
+
+.res-intro {
+  font-size:17px; font-weight:300; line-height:1.8;
+  color:rgba(240,237,230,.65); position:relative; z-index:1;
+  max-width:340px;
+}
+
+.res-metric-row {
+  display:flex; gap:32px; margin-top:48px; position:relative; z-index:1;
+}
+.metric {
+  display:flex; flex-direction:column; gap:4px;
+}
+.metric-val {
+  font-family:'Space Mono', monospace;
+  font-size:28px; font-weight:700; color:var(--lime);
+}
+.metric-lbl {
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.12em; text-transform:uppercase;
+  color:rgba(240,237,230,.45);
+}
+
+.res-right-panel {
+  display:flex; flex-direction:column; justify-content:center;
+  padding:100px 60px;
+  gap:0;
+}
+
+.res-item {
+  display:grid; grid-template-columns:40px 1fr;
+  gap:24px; padding:28px 0;
+  border-bottom:1px solid rgba(42,96,72,.15);
+  transition: padding-left .25s;
+  cursor:default;
+}
+.res-item:hover { padding-left:8px; }
+.res-item:last-child { border-bottom:none; }
+
+.res-step {
+  font-family:'Space Mono', monospace;
+  font-size:11px; color:var(--sage); padding-top:4px;
+}
+.res-title {
+  font-size:22px; font-weight:400; color:var(--ink);
+  margin-bottom:8px; line-height:1.2;
+}
+.res-desc {
+  font-size:14px; font-weight:300; line-height:1.75; color:var(--ash);
+}
+.res-desc strong { color:var(--charcoal); font-weight:400; }
+
+/* ══════════════════
+   § 6 METODOLOGIA
+══════════════════ */
+#metodologia {
+  background:var(--parchment);
+  display:flex; flex-direction:column; justify-content:center;
+  padding:100px 64px;
+}
+
+.met-top {
+  display:grid; grid-template-columns:1fr 2fr;
+  gap:64px; align-items:start;
+  margin-bottom:72px;
+}
+
+.met-h2 {
+  font-size:clamp(38px,5vw,62px);
+  font-weight:300; line-height:1.0; color:var(--ink);
+}
+.met-h2 em { color:var(--fern); font-style:italic; }
+
+.met-intro {
+  font-size:18px; font-weight:300; line-height:1.8;
+  color:var(--ash); padding-top:8px;
+  border-top:1px solid rgba(42,96,72,.2);
+}
+.met-intro strong { color:var(--fern); font-weight:400; }
+
+.timeline {
+  display:flex; flex-direction:column; gap:0;
+  position:relative;
+}
+.timeline::before {
+  content:''; position:absolute; left:20px; top:0; bottom:0;
+  width:1px; background:rgba(42,96,72,.2);
+}
+
+.tl-item {
+  display:grid; grid-template-columns:44px 1fr;
+  gap:32px; padding:32px 0;
+  border-bottom:1px solid rgba(42,96,72,.08);
+  position:relative;
+}
+.tl-item:last-child { border-bottom:none; }
+
+.tl-dot {
+  width:40px; height:40px; border-radius:50%;
+  background:var(--cream); border:1px solid rgba(42,96,72,.3);
+  display:flex; align-items:center; justify-content:center;
+  position:relative; z-index:1;
+  font-family:'Space Mono', monospace;
+  font-size:10px; color:var(--fern);
+  flex-shrink:0;
+  transition: background .3s, border-color .3s;
+}
+.tl-item:hover .tl-dot {
+  background:var(--fern); border-color:var(--fern); color:var(--paper);
+}
+
+.tl-content {}
+.tl-phase {
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--sage); margin-bottom:8px;
+}
+.tl-title {
+  font-size:22px; font-weight:400; color:var(--ink);
+  margin-bottom:10px; line-height:1.2;
+}
+.tl-desc {
+  font-size:14px; font-weight:300; line-height:1.75; color:var(--ash);
+}
+.tl-desc strong { color:var(--charcoal); font-weight:400; }
+
+/* ══════════════════
+   § 7 CONCLUSÃO
+══════════════════ */
+#conclusao {
+  background:var(--forest);
+  display:flex; align-items:center; justify-content:center;
+  padding:100px 64px; min-height:100vh;
+}
+
+.conc-wrap {
+  max-width:860px; width:100%; text-align:left;
+  position:relative; z-index:1;
+}
+
+.conc-stamp {
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.25em; text-transform:uppercase;
+  color:rgba(143,212,160,.4); margin-bottom:40px;
+  display:flex; align-items:center; gap:16px;
+}
+.conc-stamp::after { content:''; flex:1; height:1px; background:rgba(143,212,160,.15); }
+
+.conc-h2 {
+  font-size:clamp(42px,6vw,88px);
+  font-weight:300; line-height:1.0; color:var(--paper);
+  margin-bottom:40px;
+}
+.conc-h2 em { color:var(--lime); font-style:italic; }
+
+.conc-body {
+  font-size:20px; font-weight:300; line-height:1.9;
+  color:rgba(240,237,230,.55); max-width:640px;
+  margin-bottom:56px;
+}
+.conc-body strong { color:var(--lime); font-weight:400; }
+
+.conc-pills { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:64px; }
+.pill {
+  font-family:'Space Mono', monospace;
+  font-size:9px; letter-spacing:.15em; text-transform:uppercase;
+  padding:8px 20px; border:1px solid; border-radius:2px;
+}
+.pill-7  { color:var(--amber); border-color:rgba(212,160,67,.4); background:rgba(212,160,67,.06); }
+.pill-12 { color:var(--lime); border-color:rgba(143,212,160,.4); background:rgba(143,212,160,.06); }
+.pill-13 { color:#7ec8e3; border-color:rgba(126,200,227,.4); background:rgba(126,200,227,.06); }
+
+.conc-footer {
+  padding-top:32px;
+  border-top:1px solid rgba(143,212,160,.15);
+  display:flex; justify-content:space-between; align-items:end;
+  flex-wrap:wrap; gap:16px;
+}
+.footer-name {
+  font-size:22px; font-weight:300; color:var(--paper);
+}
+.footer-detail {
+  font-family:'Space Mono', monospace;
+  font-size:10px; letter-spacing:.1em; color:rgba(240,237,230,.35);
+  line-height:1.8;
+}
+
+/* ── BACKGROUND TEXTURE ── */
+body::after {
+  content:''; position:fixed; inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:9999; opacity:.3;
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width:900px) {
+  #capa, #resultados { grid-template-columns:1fr; }
+  .capa-right { display:none; }
+  #nav { padding:20px 24px; }
+  .nav-links { display:none; }
+  #diagnostico, #proposta, #ods, #metodologia, #conclusao { padding:80px 24px; }
+  .diag-top, .prop-top, .met-top { grid-template-columns:1fr; gap:32px; }
+  .diag-grid, .prop-grid, .ods-grid { grid-template-columns:1fr; }
+  .res-left-panel, .res-right-panel { padding:72px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+
+<nav id="nav">
+  <div class="nav-logo">Amara NZero — Extensão 2026</div>
+  <ul class="nav-links">
+    <li><a href="#diagnostico">Diagnóstico</a></li>
+    <li><a href="#proposta">Proposta</a></li>
+    <li><a href="#ods">ODS</a></li>
+    <li><a href="#resultados">Resultados</a></li>
+    <li><a href="#metodologia">Metodologia</a></li>
+    <li><a href="#conclusao">Conclusão</a></li>
+  </ul>
+</nav>
+
+<!-- ══ § 1 CAPA ══ -->
+<section id="capa">
+  <div class="capa-text">
+    <div class="capa-eyebrow" data-reveal>Projeto de Extensão Universitária</div>
+
+    <h1 class="capa-h1" data-reveal data-d="1">
+      Educação<br>
+      <em>Ambiental</em><br>
+      Organizacional
+    </h1>
+
+    <p class="capa-lead" data-reveal data-d="2">
+      Uma campanha que vai além de cartazes — construindo 
+      <strong>competência crítica</strong> sobre energia e clima 
+      no cotidiano dos colaboradores da Amara NZero.
+    </p>
+
+    <div class="author-block" data-reveal data-d="3">
+      <div class="author-name">Thiago Gabriel Costa Pindobeira</div>
+      <div class="author-meta">
+        <span>Psicologia — Unifacs</span>
+        <span>RA 12726128264</span>
+        <span>2026</span>
+      </div>
+    </div>
+
+    <div class="tag-row" data-reveal data-d="4">
+      <span class="tag tag-7">ODS 7 — Energia Limpa</span>
+      <span class="tag tag-12">ODS 12 — Consumo</span>
+      <span class="tag tag-13">ODS 13 — Clima</span>
+    </div>
+  </div>
+
+  <div class="capa-right">
+    <div class="capa-right-label">Premissa da campanha</div>
+    <div class="manifesto">
+      <div class="manifesto-line" data-reveal data-d="1">
+        <span class="manifesto-counter">01 —</span>
+        <strong>Informação não é educação.</strong> Distribuir conteúdo não muda comportamento — é preciso criar compreensão.
+      </div>
+      <div class="manifesto-line" data-reveal data-d="2">
+        <span class="manifesto-counter">02 —</span>
+        <strong>Política ambiental ≠ cultura ambiental.</strong> A empresa pode ter protocolos e os colaboradores ignorá-los completamente.
+      </div>
+      <div class="manifesto-line" data-reveal data-d="3">
+        <span class="manifesto-counter">03 —</span>
+        <strong>IA como ferramenta, não como resposta.</strong> A inteligência artificial apoia a produção de conteúdo; não substitui o vínculo humano com a causa.
+      </div>
+      <div class="manifesto-line" data-reveal data-d="4">
+        <span class="manifesto-counter">04 —</span>
+        <strong>Sustentabilidade é sistêmica.</strong> Trocar uma lâmpada resolve 0,001% do problema. Mudar o modelo cognitivo resolve muito mais.
+      </div>
+      <div class="manifesto-line" data-reveal data-d="5">
+        <span class="manifesto-counter">05 —</span>
+        <strong>O impacto começa no local.</strong> Uma organização é um microcosmo. Transformá-la é um experimento replicável.
+      </div>
+    </div>
+  </div>
+
+  <div class="scroll-cue" onclick="document.getElementById('diagnostico').scrollIntoView({behavior:'smooth'})">
+    <span>descer</span>
+    <svg width="14" height="20" viewBox="0 0 14 20" fill="none">
+      <path d="M7 0v16M1 10l6 6 6-6" stroke="#8fd4a0" stroke-width="1.5"/>
+    </svg>
+  </div>
+</section>
+
+<!-- ══ § 2 DIAGNÓSTICO ══ -->
+<section id="diagnostico">
+  <div class="diag-top">
+    <div>
+      <div class="diag-label" data-reveal>Etapa 01 — Diagnóstico</div>
+      <h2 class="diag-h2" data-reveal data-d="1">O que<br><em>encontramos</em><br>na empresa</h2>
+    </div>
+    <div>
+      <p class="diag-intro" data-reveal data-d="2">
+        A Amara NZero atua no mercado de <strong>soluções de descarbonização</strong>, mas o ambiente interno revelou uma lacuna significativa: os colaboradores operam diariamente com ferramentas e conceitos de impacto climático sem compreender sua dimensão sistêmica. <strong>Saber fazer não é o mesmo que saber por quê.</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="diag-grid">
+    <div class="diag-cell" data-reveal>
+      <div class="cell-num">001</div>
+      <div class="cell-type type-obs">Observação</div>
+      <div class="cell-title">Desconexão entre discurso e prática</div>
+      <div class="cell-body">A missão institucional fala em carbono zero, mas <strong>rotinas internas</strong> de consumo energético e gestão de resíduos raramente são alinhadas a essa missão. O discurso existe no site, mas não no corredor.</div>
+    </div>
+    <div class="diag-cell" data-reveal data-d="1">
+      <div class="cell-num">002</div>
+      <div class="cell-type type-opp">Oportunidade</div>
+      <div class="cell-title">Colaboradores motivados, mas desinformados</div>
+      <div class="cell-body">Pesquisa informal indicou <strong>alta disposição</strong> dos funcionários para adotar práticas sustentáveis — o obstáculo é a falta de repertório conceitual e de referências práticas no dia a dia.</div>
+    </div>
+    <div class="diag-cell" data-reveal data-d="2">
+      <div class="cell-num">003</div>
+      <div class="cell-type type-prob">Problema</div>
+      <div class="cell-title">Educação pontual sem continuidade</div>
+      <div class="cell-body">Ações educativas anteriores foram <strong>episódicas</strong> — uma palestra aqui, um e-mail ali — sem estrutura pedagógica, sem progressão de aprendizado e sem mecanismo de verificação de impacto real.</div>
+    </div>
+    <div class="diag-cell" data-reveal data-d="3">
+      <div class="cell-num">004</div>
+      <div class="cell-type type-obs">Observação</div>
+      <div class="cell-title">Potencial não explorado da IA interna</div>
+      <div class="cell-body">A empresa já utiliza ferramentas de IA no core do negócio, mas <strong>não as aplica</strong> na comunicação interna educativa — uma oportunidade de criar conteúdo personalizado e escalável.</div>
+    </div>
+    <div class="diag-cell" data-reveal data-d="4">
+      <div class="cell-num">005</div>
+      <div class="cell-type type-opp">Oportunidade</div>
+      <div class="cell-title">Empresa como laboratório replicável</div>
+      <div class="cell-body">Uma campanha bem documentada dentro da Amara NZero pode se tornar <strong>modelo exportável</strong> para os clientes que ela própria assessora em processos de descarbonização organizacional.</div>
+    </div>
+    <div class="diag-cell" data-reveal data-d="5">
+      <div class="cell-num">006</div>
+      <div class="cell-type type-prob">Problema</div>
+      <div class="cell-title">Ausência de métricas de cultura</div>
+      <div class="cell-body">Não existem indicadores de <strong>alfabetização ambiental</strong> dos colaboradores. Sem medir o ponto de partida, é impossível demonstrar evolução — o que fragiliza qualquer iniciativa junto à liderança.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ § 3 PROPOSTA ══ -->
+<section id="proposta">
+  <div class="prop-top">
+    <div>
+      <div class="diag-label" style="color:var(--sage)" data-reveal>Etapa 02 — Proposta</div>
+      <h2 class="prop-h2" data-reveal data-d="1">O que<br><em>propomos</em><br>construir</h2>
+    </div>
+    <div>
+      <p class="prop-description" data-reveal data-d="2">
+        Uma campanha educativa em <strong>quatro eixos complementares</strong>, desenhada para criar compreensão duradoura — não apenas exposição a informação. Cada eixo combina produção de conteúdo com metodologia pedagógica explícita, usando inteligência artificial como acelerador, não como substituto.
+      </p>
+    </div>
+  </div>
+
+  <div class="prop-grid">
+    <div class="prop-cell pc1" data-reveal>
+      <div class="prop-n">EIXO 01</div>
+      <div class="prop-title">Diagnóstico de Alfabetização Ambiental</div>
+      <div class="prop-body">
+        Aplicação de questionário estruturado para mapear o <strong>nível de conhecimento atual</strong> sobre energia, emissões e mudanças climáticas. Segmentado por área e função, cria a linha de base necessária para medir evolução ao longo da campanha.
+      </div>
+      <div class="prop-note">Ferramenta: formulário digital com análise automatizada via IA para identificação de padrões por setor.</div>
+    </div>
+    <div class="prop-cell pc2" data-reveal data-d="1">
+      <div class="prop-n">EIXO 02</div>
+      <div class="prop-title">Série de Conteúdos Progressivos</div>
+      <div class="prop-body">
+        Produção de <strong>8 módulos de conteúdo</strong> com progressão pedagógica: do vocabulário básico (ODS, carbono, emissões) até conceitos aplicados (pegada operacional, trade-offs energéticos). Formato adaptado a diferentes perfis de colaborador.
+      </div>
+      <div class="prop-note">Distribuição multicanal: intranet, impressos afixados, cards para WhatsApp corporativo e apresentações em reuniões de equipe.</div>
+    </div>
+    <div class="prop-cell pc3" data-reveal data-d="2">
+      <div class="prop-n">EIXO 03</div>
+      <div class="prop-title">Laboratório de Decisões Sustentáveis</div>
+      <div class="prop-body">
+        Duas <strong>dinâmicas presenciais</strong> de simulação: uma sobre dilemas de consumo energético no escritório e outra sobre análise de ciclo de vida de produtos. Metodologia baseada em aprendizagem experiencial para criar memória afetiva do conteúdo.
+      </div>
+      <div class="prop-note">Formato: workshop de 90 minutos com grupos de 15 participantes, facilitado pelo extensionista com apoio de materiais visuais.</div>
+    </div>
+    <div class="prop-cell pc4" data-reveal data-d="3">
+      <div class="prop-n">EIXO 04</div>
+      <div class="prop-title">Avaliação de Impacto e Documentação</div>
+      <div class="prop-body">
+        Reaplicação do questionário inicial após a campanha, análise comparativa e produção de <strong>relatório de impacto</strong> com dados qualitativos e quantitativos. Documenta o modelo para replicação em outros contextos organizacionais.
+      </div>
+      <div class="prop-note">Produto final: relatório técnico público disponível para uso pelos clientes da Amara NZero como referência metodológica.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ § 4 ODS ══ -->
+<section id="ods">
+  <div class="ods-top">
+    <div class="diag-label" style="color:var(--lime)" data-reveal>Etapa 03 — Alinhamento Global</div>
+    <h2 class="ods-h2" data-reveal data-d="1">Objetivos de<br><em>Desenvolvimento</em><br>Sustentável</h2>
+    <p class="ods-sub" data-reveal data-d="2">A campanha se ancora em três ODS da Agenda 2030 da ONU, criando um elo direto entre a ação local na organização e os compromissos globais de transformação.</p>
+  </div>
+
+  <div class="ods-grid">
+    <div class="ods-card" data-reveal>
+      <div class="ods-header ods7h">
+        <div class="ods-label">Objetivo de Desenvolvimento Sustentável</div>
+        <div class="ods-name">Energia Limpa e Acessível</div>
+        <div class="ods-n">7</div>
+      </div>
+      <div class="ods-body">
+        <p>A campanha aborda a <strong>matriz energética</strong> brasileira e global, criando consciência sobre de onde vem a energia consumida no escritório, qual sua pegada de carbono associada e quais alternativas estão disponíveis para organizações no atual estágio de transição energética.</p>
+        <div class="ods-link">Meta 7.3 — Eficiência Energética</div>
+      </div>
+    </div>
+    <div class="ods-card" data-reveal data-d="1">
+      <div class="ods-header ods12h">
+        <div class="ods-label">Objetivo de Desenvolvimento Sustentável</div>
+        <div class="ods-name">Consumo e Produção Responsáveis</div>
+        <div class="ods-n">12</div>
+      </div>
+      <div class="ods-body">
+        <p>Os módulos de conteúdo abordam <strong>ciclo de vida de produtos</strong>, descarte correto, consumo consciente no ambiente de trabalho e o impacto sistêmico de decisões cotidianas aparentemente pequenas — como impressão de documentos ou uso de descartáveis.</p>
+        <div class="ods-link">Meta 12.8 — Informação e Consciência</div>
+      </div>
+    </div>
+    <div class="ods-card" data-reveal data-d="2">
+      <div class="ods-header ods13h">
+        <div class="ods-label">Objetivo de Desenvolvimento Sustentável</div>
+        <div class="ods-name">Ação Contra a Mudança Global do Clima</div>
+        <div class="ods-n">13</div>
+      </div>
+      <div class="ods-body">
+        <p>Dois módulos são dedicados à <strong>ciência climática</strong> aplicada: o que é carbono equivalente, como calcular emissões organizacionais e como interpretar relatórios de sustentabilidade — tornando colaboradores capazes de entender o negócio em que trabalham.</p>
+        <div class="ods-link">Meta 13.3 — Educação Climática</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ § 5 RESULTADOS ══ -->
+<section id="resultados">
+  <div class="res-left-panel">
+    <div class="res-bignum">R</div>
+    <div class="diag-label" style="color:var(--lime); position:relative; z-index:1" data-reveal>Etapa 04 — Resultados Esperados</div>
+    <h2 class="res-h2" data-reveal data-d="1">O que<br>essa campanha<br><em>produz</em></h2>
+    <p class="res-intro" data-reveal data-d="2">
+      Resultados mensuráveis em três dimensões: conhecimento individual, cultura organizacional e legado metodológico para o setor.
+    </p>
+    <div class="res-metric-row" data-reveal data-d="3">
+      <div class="metric">
+        <div class="metric-val">8</div>
+        <div class="metric-lbl">Módulos</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">2</div>
+        <div class="metric-lbl">Workshops</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">3</div>
+        <div class="metric-lbl">ODS cobertos</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="res-right-panel">
+    <div class="res-item" data-reveal>
+      <div class="res-step">R.01</div>
+      <div>
+        <div class="res-title">Linha de base de alfabetização estabelecida</div>
+        <div class="res-desc">Pela primeira vez a empresa terá dados sobre o <strong>nível de conhecimento ambiental</strong> dos colaboradores, segmentados por setor — um ativo de gestão antes inexistente.</div>
+      </div>
+    </div>
+    <div class="res-item" data-reveal data-d="1">
+      <div class="res-step">R.02</div>
+      <div>
+        <div class="res-title">Vocabulário compartilhado sobre clima e energia</div>
+        <div class="res-desc">Ao final, colaboradores de diferentes áreas serão capazes de usar <strong>os mesmos conceitos</strong> ao discutir sustentabilidade — eliminando a barreira de entrada em conversas técnicas.</div>
+      </div>
+    </div>
+    <div class="res-item" data-reveal data-d="2">
+      <div class="res-step">R.03</div>
+      <div>
+        <div class="res-title">Modelo pedagógico documentado e exportável</div>
+        <div class="res-desc">O relatório final registra toda a metodologia, erros, ajustes e resultados — tornando a campanha um <strong>produto replicável</strong> para os clientes da Amara NZero.</div>
+      </div>
+    </div>
+    <div class="res-item" data-reveal data-d="3">
+      <div class="res-step">R.04</div>
+      <div>
+        <div class="res-title">Aumento mensurável na compreensão dos ODS</div>
+        <div class="res-desc">A comparação pré/pós questionário quantifica o <strong>delta de aprendizado</strong>, fornecendo evidência concreta do impacto educacional — validando o investimento da organização.</div>
+      </div>
+    </div>
+    <div class="res-item" data-reveal data-d="4">
+      <div class="res-step">R.05</div>
+      <div>
+        <div class="res-title">Cultura ambiental como processo, não evento</div>
+        <div class="res-desc">A estrutura progressiva da campanha instala a <strong>lógica de aprendizado contínuo</strong> — a organização termina com ferramentas para dar continuidade autônoma ao processo educativo.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ § 6 METODOLOGIA ══ -->
+<section id="metodologia">
+  <div class="met-top">
+    <div>
+      <div class="diag-label" data-reveal>Etapa 05 — Metodologia</div>
+      <h2 class="met-h2" data-reveal data-d="1">Como<br><em>acontece</em><br>na prática</h2>
+    </div>
+    <div>
+      <p class="met-intro" data-reveal data-d="2">
+        A campanha se estrutura em <strong>quatro fases sequenciais</strong> ao longo de aproximadamente doze semanas, com uso estratégico de inteligência artificial na produção de conteúdo e análise de dados — sempre subordinado à intencionalidade pedagógica humana.
+      </p>
+    </div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item" data-reveal>
+      <div class="tl-dot">F1</div>
+      <div class="tl-content">
+        <div class="tl-phase">Semanas 1–2 — Imersão e Diagnóstico</div>
+        <div class="tl-title">Mapeamento do terreno</div>
+        <div class="tl-desc">
+          Entrevistas com liderança para alinhar expectativas, aplicação do questionário de diagnóstico a todos os colaboradores disponíveis e análise dos resultados com apoio de IA para identificar padrões. <strong>Produto: relatório diagnóstico interno com estratificação por setor.</strong>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item" data-reveal data-d="1">
+      <div class="tl-dot">F2</div>
+      <div class="tl-content">
+        <div class="tl-phase">Semanas 3–7 — Produção e Distribuição</div>
+        <div class="tl-title">Criação e veiculação dos módulos</div>
+        <div class="tl-desc">
+          Produção dos 8 módulos de conteúdo com curadoria e redação humana, apoiada por IA para pesquisa e versões alternativas. Distribuição quinzenal adaptada ao ritmo da empresa. <strong>Cada módulo inclui material visual, texto explicativo e uma "ação prática da semana".</strong>
+        </div>
+      </div>
+    </div>
+    <div class="tl-item" data-reveal data-d="2">
+      <div class="tl-dot">F3</div>
+      <div class="tl-content">
+        <div class="tl-phase">Semanas 8–10 — Vivência Presencial</div>
+        <div class="tl-title">Os dois laboratórios de decisão</div>
+        <div class="tl-desc">
+          Realização dos dois workshops presenciais: o primeiro sobre <strong>dilemas de consumo energético</strong> (usando simulações de situações reais da empresa) e o segundo sobre <strong>análise de ciclo de vida</strong> de insumos do escritório. Grupos limitados para profundidade dialógica.
+        </div>
+      </div>
+    </div>
+    <div class="tl-item" data-reveal data-d="3">
+      <div class="tl-dot">F4</div>
+      <div class="tl-content">
+        <div class="tl-phase">Semanas 11–12 — Avaliação e Documentação</div>
+        <div class="tl-title">Medição de impacto e fechamento</div>
+        <div class="tl-desc">
+          Reaplicação do questionário inicial, análise comparativa pré/pós, coleta de depoimentos qualitativos e produção do relatório técnico final. <strong>Apresentação dos resultados à liderança com recomendações para continuidade.</strong> Documentação completa disponibilizada como recurso público.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ § 7 CONCLUSÃO ══ -->
+<section id="conclusao">
+  <div class="conc-wrap">
+    <div class="conc-stamp" data-reveal>Extensão Universitária — Unifacs 2026</div>
+
+    <h2 class="conc-h2" data-reveal data-d="1">
+      Mudar<br>
+      <em>como</em><br>
+      se pensa
+    </h2>
+
+    <p class="conc-body" data-reveal data-d="2">
+      A crise climática não será resolvida por empresas que sabem o que fazer, mas por <strong>organizações cujos colaboradores entendem por que fazem</strong>. A distância entre o discurso sustentável e a prática cotidiana não é técnica — é cognitiva e cultural.
+      <br><br>
+      Esta campanha propõe um experimento rigoroso dentro da Amara NZero: usar os recursos de uma extensão universitária para <strong>instalar compreensão onde hoje existe apenas intenção</strong>. O resultado não é apenas uma empresa mais educada — é um modelo documentado de como escalar essa transformação.
+    </p>
+
+    <div class="conc-pills" data-reveal data-d="3">
+      <span class="pill pill-7">ODS 7 — Energia Limpa e Acessível</span>
+      <span class="pill pill-12">ODS 12 — Consumo Responsável</span>
+      <span class="pill pill-13">ODS 13 — Ação Climática</span>
+    </div>
+
+    <div class="conc-footer" data-reveal data-d="4">
+      <div>
+        <div class="footer-name">Thiago Gabriel Costa Pindobeira</div>
+        <div class="footer-detail">Psicologia — Unifacs · RA 12726128264<br>Projeto de Extensão Universitária · 2026<br>Parceria: Amara NZero</div>
+      </div>
+      <div class="footer-detail" style="text-align:right">
+        Campanha Educativa<br>
+        Educação Ambiental Organizacional<br>
+        — documento de apresentação —
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+// Progress bar
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.documentElement.scrollHeight - window.innerHeight;
+  document.getElementById('bar').style.width = (scrolled / total * 100) + '%';
+});
+
+// Scroll reveal
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('on');
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
